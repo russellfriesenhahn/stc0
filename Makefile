@@ -20,8 +20,8 @@ py3env/bin/cocotb-config: py3env/bin/activate modules/cocotb/.git/ORIG_HEAD
 	pip install numpy; \
 	deactivate
 
-INIT_PRODUCTS=py3env/bin/cocotb-config
-init: $(INIT_PRODUCTS)
+ENV_PRODUCTS=py3env/bin/cocotb-config
+env: $(ENV_PRODUCTS)
 
 clean:
 	rm -rf modules
