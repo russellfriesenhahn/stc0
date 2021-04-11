@@ -23,5 +23,11 @@ py3env/bin/cocotb-config: py3env/bin/activate modules/cocotb/.git/ORIG_HEAD
 ENV_PRODUCTS=py3env/bin/cocotb-config
 env: $(ENV_PRODUCTS)
 
+verilog/rtl/stc0_addrMap.vh: sw/mk_addrMapvh.py sw/stc0.py
+	python $< $@
+
+INIT_PRODUCTS=verilog/rtl/stc0_addrMap.vh
+design_init: $(INIT_PRODUCTS)
+
 clean:
 	rm -rf modules
