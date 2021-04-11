@@ -1,0 +1,7 @@
+*.pyc
+*.lxt2
+**/attic/*
+**/sim_build/*
+#modules/*
+**/__pycache__
+verilog/rtl/stc0_addrMap.vh
