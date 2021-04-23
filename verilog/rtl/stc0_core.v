@@ -73,8 +73,8 @@ module stc0_core#(
 
     spram#(
         .DW(32),
-        .AW(8),
-        .RAM_DEPTH(1 << 8)
+        .AW(NUM_POINTS_LOG2),
+        .RAM_DEPTH(1 << NUM_POINTS_LOG2)
     ) spram_bf0 (
         .Clk(ClkIngress),
         .Csb0(SPRcsn_bf0),
@@ -83,10 +83,10 @@ module stc0_core#(
         .DIN0(SPRdin_bf0),
         .DOUT0(SPRdout_bf0)
     );
-    
+
     stc0butterfly#(
         .DATA_WIDTH(16),
-        .BF_NUM(1),
+        .BF_NUM(`CTRL_BF0),
         .TW_WIDTH(16)
     ) bf0 (
         .Clk(ClkIngress),
