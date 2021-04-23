@@ -144,7 +144,7 @@ module stc0butterfly#(
             valids0 <= IngressValid;
             CSn <= ~IngressValid;
             WEn <= ~(IngressValid & ctrlWordReg[`RB_BFCTRL_TWWR]);
-            
+
             // Stage 1
             Brs1 <= Brs0;
             Bis1 <= Bis0;

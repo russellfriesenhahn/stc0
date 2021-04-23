@@ -119,7 +119,6 @@ module stc0Ctrl#(
             
             if (enableLFSRs) begin
                 lfsrStrideCount <= 0;
-                //lfsrsIterCount <= 0;
             end else if (updateLFSRs) begin
                 lfsrStrideCount <= 0;
 
