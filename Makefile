@@ -29,5 +29,10 @@ verilog/rtl/stc0_addrMap.vh: sw/mk_addrMapvh.py sw/stc0.py
 INIT_PRODUCTS=verilog/rtl/stc0_addrMap.vh
 design_init: $(INIT_PRODUCTS)
 
+sim: design_init
+	cd sim/cocotb_sim; make
+
 clean:
-	rm -rf modules
+	rm -rf modules/cocotb
+	rm -rf py3env
+	cd sim/cocotb_sim; make clean

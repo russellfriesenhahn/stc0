@@ -86,6 +86,10 @@ class stc0():
     #HW_RB_BFPCTRL_TMUXUSRCTRL = 3
     HW_RB_BFCTRL_TWRD = 6
     HW_RB_BFCTRL_TWWR = 7
+    # 0,2: Twiddle RAM
+    # 1: 1
+    # 3: static value
+    HW_RB_BFCTRL_TWMUXCTRL = 8
     #HW_RB_BFPCTRL_SRAM_CLR = 8
     #HW_RB_BFPCTRL_DISABLE_OUT = 9
 

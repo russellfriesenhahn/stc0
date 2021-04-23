@@ -97,8 +97,10 @@ module stc0butterfly#(
     end
     // Local Control assignments
     //-----------------------------------------------------
-    assign twR = SRAM_RData[(TW_WIDTH*2)-1:TW_WIDTH];
-    assign twI = SRAM_RData[TW_WIDTH-1:0];
+
+    assign {twR,twI} = ctrlWordReg[`RB_BFCTRL_TWMUXCTRL]
+                ? (ctrlWordReg[`RB_BFCTRL_TWMUXCTRL+1] ? {16'4567,16'2345} : { {(TW_WIDTH-1){1'b0}}, 1'b1 , {(TW_WIDTH-1){1'b0}}, 1'b1} )
+                : SRAM_RData;
     assign SRAM_WData = {Brs0, Bis0};
 
     always @(posedge Clk or posedge Rst) begin
