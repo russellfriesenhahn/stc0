@@ -99,7 +99,7 @@ module stc0butterfly#(
     //-----------------------------------------------------
 
     assign {twR,twI} = ctrlWordReg[`RB_BFCTRL_TWMUXCTRL]
-                ? (ctrlWordReg[`RB_BFCTRL_TWMUXCTRL+1] ? {16'4567,16'2345} : { {(TW_WIDTH-1){1'b0}}, 1'b1 , {(TW_WIDTH-1){1'b0}}, 1'b1} )
+                ? (ctrlWordReg[`RB_BFCTRL_TWMUXCTRL+1] ? {16'h4567,16'h2345} : { {(TW_WIDTH-1){1'b0}}, 1'b1 , {(TW_WIDTH-1){1'b0}}, 1'b1} )
                 : SRAM_RData;
     assign SRAM_WData = {Brs0, Bis0};
 
