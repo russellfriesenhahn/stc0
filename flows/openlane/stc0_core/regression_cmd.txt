@@ -1,0 +1,1 @@
+python3 run_designs.py --threads 5 --delete --designs stc0_core --regression ./designs/stc0_core/regression.config
