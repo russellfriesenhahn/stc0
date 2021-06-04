@@ -24,7 +24,7 @@ ENV_PRODUCTS=py3env/bin/cocotb-config
 env: $(ENV_PRODUCTS)
 
 verilog/rtl/stc0_addrMap.vh: sw/mk_addrMapvh.py sw/stc0.py
-	python $< $@
+	python3 $< $@
 
 INIT_PRODUCTS=verilog/rtl/stc0_addrMap.vh
 design_init: $(INIT_PRODUCTS)
