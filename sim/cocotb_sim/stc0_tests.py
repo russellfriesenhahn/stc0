@@ -43,6 +43,7 @@ def stc0_load_tw(dut):
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
+    patternLength = 512
     seedValA = 0x1
     seedValB = 0x2
     crcValA = 0x0
@@ -53,7 +54,7 @@ def stc0_load_tw(dut):
     esCtrl = (stc0.HW_CTRL_ES << stc0.HW_RB_CTRL_ADDR) | (0x0 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN) | (0x1 << stc0.HW_RB_EGRESSCTRL_CRCBYPASS)|(0x2 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX)
     #yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [esCtrl])
     yield stc0.hk.send_write_command(0x1, stc0.HW_FA_CTRL_CTRLWORD, [esCtrl])
-    yield stc0.configAndStartLFSRs(0x1, 512, 0x0, 0x1, 0x2)
+    yield stc0.configAndStartLFSRs(0x1, patternLength, 0x0, 0x1, 0x2)
     yield Timer(CLK_PERIOD_NS * 1050, units='ns')
     print(hex(bf0Ctrl))
     bf0Ctrl ^= (0x1 << stc0.HW_RB_BFCTRL_TWWR)
@@ -64,16 +65,16 @@ def stc0_load_tw(dut):
     esCtrl |= (0x1 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN)
     esCtrl |= (0x2 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX)
     yield stc0.hk.send_write_command(0x1, stc0.HW_FA_CTRL_CTRLWORD, [esCtrl])
-    yield stc0.configAndStartLFSRs(0x4, 512, 0x0, 0x0, 0x0)
+    yield stc0.configAndStartLFSRs(0x4, patternLength, 0x0, 0x0, 0x0)
     yield Timer(CLK_PERIOD_NS * 530 * 4, units='ns')
     #yield Timer(CLK_PERIOD_NS * 30, units='ns')
-    yield stc0.hk.send_write_command(stc0.hk.HW_HK_WRITE, stc0.hk.HW_ADDR_SFFRB_NUMBYTES, [512*4])
+    yield stc0.hk.send_write_command(stc0.hk.HW_HK_WRITE, stc0.hk.HW_ADDR_SFFRB_NUMBYTES, [patternLength*4])
     yield Timer(CLK_PERIOD_NS * 5, units='ns')
-    a = yield stc0.hk.ft245m.read_bytes(512*4)
+    a = yield stc0.hk.ft245m.read_bytes(patternLength*4)
     yield Timer(CLK_PERIOD_NS * 40, units='ns')
 
-    data = numpy.arange(512)
-    for i in range(0,512):
+    data = numpy.arange(patternLength)
+    for i in range(0,patternLength):
         data[i] = seedValB
         crcValB = crc32(crcValB, seedValB)
         seedValB = lfsr32(seedValB, 1)
