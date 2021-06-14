@@ -2,13 +2,12 @@ set script_dir [file dirname [file normalize [info script]]]
 
 set ::env(DESIGN_NAME) stc0_core
 
-set ::env(VERILOG_FILES) [glob $::env(OPENLANE_ROOT)/designs/stc0_core/src/*.v]
-#set ::env(VERILOG_FILES) "\
+set ::env(VERILOG_FILES) "\
     [glob $script_dir/../../../verilog/rtl/*.v]"
 
 set ::env(CLOCK_PORT) "ClkIngress"
 set ::env(CLOCK_NET) "ClkIngress"
-set ::env(CLOCK_PERIOD) "20"
+set ::env(CLOCK_PERIOD) "10"
 
 #set ::env(FP_SIZING) absolute
 #set ::env(DIE_AREA) "0 0 900 600"
