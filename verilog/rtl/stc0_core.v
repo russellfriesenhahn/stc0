@@ -81,54 +81,24 @@ module stc0_core#(
     wire [(TW_WIDTH*2)-1:0]     SPRdin_bf0;
     wire [(TW_WIDTH*2)-1:0]     SPRdout_bf0;
 
-    //spram#(
-        //.DW(32),
-        //.AW(NUM_POINTS_LOG2),
-        //.RAM_DEPTH(1 << NUM_POINTS_LOG2)
-    //) spram_bf0 (
-        //.Clk(ClkIngress),
-        //.Csb0(SPRcsn_bf0),
-        //.Web0(SPRwen_bf0),
-        //.ADDR0(SPRaddr_bf0),
-        //.DIN0(SPRdin_bf0),
-        //.DOUT0(SPRdout_bf0)
-    //);
+    spram#(
+        .DW(32),
+        .AW(NUM_POINTS_LOG2),
+        .RAM_DEPTH(1 << NUM_POINTS_LOG2)
+    ) spram_bf0 (
+        .Clk(ClkIngress),
+        .Csb0(SPRcsn_bf0),
+        .Web0(SPRwen_bf0),
+        .ADDR0(SPRaddr_bf0),
+        .DIN0(SPRdin_bf0),
+        .DOUT0(SPRdout_bf0)
+    );
 
-    //stc0butterfly#(
-        //.DATA_WIDTH(16),
-        //.BF_NUM(`CTRL_BF0),
-        //.TW_WIDTH(16)
-    //) bf0 (
-        //.Clk(ClkIngress),
-        //.ARst(ARst),
-            //// Control
-        //.CtrlAddr(CtrlAddr[0]),
-        //.CtrlWord(CtrlWord[0]),
-        //.CtrlValid(CtrlValid[0]),
-        //.CtrlAddrOut(CtrlAddr[1]),
-        //.CtrlWordOut(CtrlWord[1]),
-        //.CtrlValidOut(CtrlValid[1]),
-            //// Data
-        //.Ar(AEgress[31:16]),
-        //.Ai(AEgress[15:0]),
-        //.Br(BEgress[31:16]),
-        //.Bi(BEgress[15:0]),
-        //.IngressValid(AEgressValid),
-        //.Cr(C[16*2-1:16]),
-        //.Ci(C[16-1:0]),
-        //.Dr(D[16*2-1:16]),
-        //.Di(D[16-1:0]),
-        //.EgressValid(bf0EgressValid),
-        //.SRAM_WData(SPRdin_bf0),
-        //.SRAM_RData(SPRdout_bf0),
-        //.Addr(SPRaddr_bf0),
-        //.CSn(SPRcsn_bf0),
-        //.WEn(SPRwen_bf0)
-    //);
-    egressStage #(
+    stc0butterfly#(
         .DATA_WIDTH(16),
-        .CTRL_STAGE(`CTRL_ES)
-    ) egressStage_ (
+        .BF_NUM(`CTRL_BF0),
+        .TW_WIDTH(16)
+    ) bf0 (
         .Clk(ClkIngress),
         .ARst(ARst),
         // Control
@@ -139,9 +109,39 @@ module stc0_core#(
         .CtrlWordOut(CtrlWord[1]),
         .CtrlValidOut(CtrlValid[1]),
         // Data
-        .C(AEgress),
-        .D(BEgress),
+        .Ar(AEgress[31:16]),
+        .Ai(AEgress[15:0]),
+        .Br(BEgress[31:16]),
+        .Bi(BEgress[15:0]),
         .IngressValid(AEgressValid),
+        .Cr(C[16*2-1:16]),
+        .Ci(C[16-1:0]),
+        .Dr(D[16*2-1:16]),
+        .Di(D[16-1:0]),
+        .EgressValid(bf0EgressValid),
+        .SRAM_WData(SPRdin_bf0),
+        .SRAM_RData(SPRdout_bf0),
+        .Addr(SPRaddr_bf0),
+        .CSn(SPRcsn_bf0),
+        .WEn(SPRwen_bf0)
+    );
+    egressStage #(
+        .DATA_WIDTH(16),
+        .CTRL_STAGE(`CTRL_ES)
+    ) egressStage_ (
+        .Clk(ClkIngress),
+        .ARst(ARst),
+        // Control
+        .CtrlAddr(CtrlAddr[1]),
+        .CtrlWord(CtrlWord[1]),
+        .CtrlValid(CtrlValid[1]),
+        .CtrlAddrOut(CtrlAddr[2]),
+        .CtrlWordOut(CtrlWord[2]),
+        .CtrlValidOut(CtrlValid[2]),
+        // Data
+        .C(C),
+        .D(D),
+        .IngressValid(bf0EgressValid),
         .EgressData(egressData),
         .EgressValid(egressValid),
         .Ready(byteEgressReady)
