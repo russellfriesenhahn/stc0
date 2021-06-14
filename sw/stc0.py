@@ -67,6 +67,9 @@ class stc0():
 
     HW_FA_CTRL_CTRLWORD = (HW_RM_CTRL << HW_RML) | (HW_RA_CTRL_CTRLWORD << HW_RAL)
     HW_CTRL_BF0 = 0
+
+    HW_CTRL_BF2 = 2
+    HW_CTRL_BF3 = 3
     HW_CTRL_ES = 13
     HW_CTRLWRD_SZ = 10
     HW_RB_CTRL_ADDR = 28
