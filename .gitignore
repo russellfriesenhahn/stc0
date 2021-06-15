@@ -5,3 +5,6 @@
 #modules/*
 **/__pycache__
 verilog/rtl/stc0_addrMap.vh
+flows/openlane/stc0_core/runs/*
+modules/cocotb
+*.xml
