@@ -43,13 +43,14 @@ def stc0_load_tw(dut):
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
-    patternLength = 512
+    patternLength = 128
     seedValA = 0x1
     seedValB = 0x2
     crcValA = 0x0
     crcValB = 0x0
     yield stc0.hk.set_sfifoWrSrc(hk.HW_SFFWRSRC_INGRESS)
-    bf0Ctrl = (stc0.HW_CTRL_BF0 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_TWWR)
+    # write to Twiddle RAM
+    bf0Ctrl = (stc0.HW_CTRL_BF2 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_TWWR)
     yield stc0.hk.send_write_command(0x1, stc0.HW_FA_CTRL_CTRLWORD, [bf0Ctrl])
     esCtrl = (stc0.HW_CTRL_ES << stc0.HW_RB_CTRL_ADDR) | (0x0 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN) | (0x1 << stc0.HW_RB_EGRESSCTRL_CRCBYPASS)|(0x2 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX)
     #yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [esCtrl])
@@ -57,8 +58,10 @@ def stc0_load_tw(dut):
     yield stc0.configAndStartLFSRs(0x1, patternLength, 0x0, 0x1, 0x2)
     yield Timer(CLK_PERIOD_NS * 1050, units='ns')
     print(hex(bf0Ctrl))
+    # clear the Twiddle RAM write bit
     bf0Ctrl ^= (0x1 << stc0.HW_RB_BFCTRL_TWWR)
     print(hex(bf0Ctrl))
+    # set the Twiddle RAM read bit
     bf0Ctrl |= (0x1 << stc0.HW_RB_BFCTRL_TWRD)
     print(hex(bf0Ctrl))
     yield stc0.hk.send_write_command(0x1, stc0.HW_FA_CTRL_CTRLWORD, [bf0Ctrl])
@@ -109,7 +112,7 @@ def stc0_both_crc_test(dut):
     crcValA = 0x0
     crcValB = 0x0
     yield stc0.hk.set_sfifoWrSrc(hk.HW_SFFWRSRC_INGRESS)
-    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF0 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
+    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF2 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
     yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_ES << stc0.HW_RB_CTRL_ADDR) | (0x0 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN) | (0x0 << stc0.HW_RB_EGRESSCTRL_CRCBYPASS)|(0x0 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX) ])
     yield stc0.configAndStartLFSRs(0x1, 0x10, 0x0, 0x1, 0x2)
     yield Timer(CLK_PERIOD_NS * 30, units='ns')
@@ -155,7 +158,7 @@ def stc0_both_lfsr_test(dut):
     seedValA = 0x1
     seedValB = 0x2
     yield stc0.hk.set_sfifoWrSrc(hk.HW_SFFWRSRC_INGRESS)
-    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF0 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
+    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF2 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
     yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_ES << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN) | (0x1 << stc0.HW_RB_EGRESSCTRL_CRCBYPASS)|(0x0 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX) ])
     yield stc0.configAndStartLFSRs(0x8, 0x10, 0x0, 0x1, 0x2)
     yield stc0.hk.send_write_command(stc0.hk.HW_HK_WRITE, stc0.hk.HW_ADDR_SFFRB_NUMBYTES, [128])
@@ -193,7 +196,7 @@ def stc0_lfsr_test(dut):
 
     seedVal = 0x1
     yield stc0.hk.set_sfifoWrSrc(hk.HW_SFFWRSRC_INGRESS)
-    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF0 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
+    yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_BF2 << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_BFCTRL_BFBYPASS)])
     yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_CTRLWORD << stc0.HW_RAL), [(stc0.HW_CTRL_ES << stc0.HW_RB_CTRL_ADDR) | (0x1 << stc0.HW_RB_EGRESSCTRL_OUTPUTEN) | (0x1 << stc0.HW_RB_EGRESSCTRL_CRCBYPASS)|(0x1 << stc0.HW_RB_EGRESSCTRL_OUTPUTMUX) ])
     yield stc0.configAndStartLFSRs(0x4, 0x10, 0x0, 0x1, 0x1)
     #yield stc0.hk.send_write_command(0x1, (stc0.HW_RM_CTRL << stc0.HW_RML) | (stc0.HW_RA_CTRL_MUXCTRL << stc0.HW_RAL), [0x1])
