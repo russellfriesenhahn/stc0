@@ -25,8 +25,8 @@ module stc0_core#(
     input wire  [7:0]   ID,
     input wire          IValid,
     output wire [7:0]   ED,
-    output wire         EValid,
-    output wire         EClk
+    output wire         EValid
+    //output wire         EClk
 );
 
     wire [23:0] waddr;
