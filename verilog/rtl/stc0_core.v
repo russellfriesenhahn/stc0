@@ -21,7 +21,7 @@ module stc0_core#(
     inout vssd2,	// User area 2 digital ground
 `endif
     input wire          ClkIngress,
-    input wire          ARst,
+    input wire          ARstb,
     input wire  [7:0]   ID,
     input wire          IValid,
     output wire [7:0]   ED,
@@ -46,8 +46,12 @@ module stc0_core#(
     wire [16*2-1:0] egressData;
     wire egressValid;
     wire byteEgressReady;
+    wire ARst;
 
     assign EClk = ClkIngress;
+
+
+    rstSync #(.NUM_SYNC_CLKS(5)) rstSync_clk (.Clk(ClkIngress),.ARstb(ARstb),.Rst(ARst));
 
     byteIngressCmdProcessor byteIngressCmdProcessor_0 (
         .ClkIngress(ClkIngress),

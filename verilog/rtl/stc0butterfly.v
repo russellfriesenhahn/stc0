@@ -38,8 +38,8 @@ module stc0butterfly#(
 );
     localparam TW_RAM_ADDR_WIDTH = NUM_POINTS_LOG2 - (BF_NUM + 1);
 
-    wire Rst;
-    rstSync #(.NUM_SYNC_CLKS(3)) rstSync_pclk (.Clk(Clk),.ARst(ARst),.Rst(Rst));
+    wire Rst = ARst;
+    //rstSync #(.NUM_SYNC_CLKS(3)) rstSync_pclk (.Clk(Clk),.ARst(ARst),.Rst(Rst));
 
     reg [NUM_POINTS_LOG2+2:0]   clkCntr;
     reg [DATA_WIDTH-1:0]  Ars0;

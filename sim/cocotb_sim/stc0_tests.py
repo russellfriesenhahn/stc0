@@ -36,10 +36,12 @@ def stc0_load_tw(dut):
 
     numpy.set_printoptions(formatter={'int':lambda x:hex(int(x))})
     dut.ARst <= 1
+    dut.ARstb <= 0
     stc0 = stc0SIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
@@ -100,10 +102,12 @@ def stc0_both_crc_test(dut):
 
     numpy.set_printoptions(formatter={'int':lambda x:hex(int(x))})
     dut.ARst <= 1
+    dut.ARstb <= 0
     stc0 = stc0SIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
@@ -148,10 +152,12 @@ def stc0_both_lfsr_test(dut):
 
     numpy.set_printoptions(formatter={'int':lambda x:hex(int(x))})
     dut.ARst <= 1
+    dut.ARstb <= 0
     stc0 = stc0SIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
@@ -187,10 +193,12 @@ def stc0_lfsr_test(dut):
 
     numpy.set_printoptions(formatter={'int':lambda x:hex(int(x))})
     dut.ARst <= 1
+    dut.ARstb <= 0
     stc0 = stc0SIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
@@ -231,10 +239,12 @@ def stc0_basic_test(dut):
     """
 
     dut.ARst <= 1
+    dut.ARstb <= 0
     stc0 = stc0SIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield stc0.hk.reset()
 
@@ -267,10 +277,12 @@ def stc0_housekeeper_test(dut):
     """
 
     dut.ARst <= 1
+    dut.ARstb <= 0
     hk = hkSIMcocotb(dut, CLK_PERIOD_NS)
     cocotb.fork(Clock(dut.Clk, CLK_PERIOD_NS, units='ns').start())
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     dut.ARst <= 0
+    dut.ARstb <= 1
     yield Timer(CLK_PERIOD_NS * 10, units='ns')
     yield hk.reset()
 

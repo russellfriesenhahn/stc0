@@ -2,6 +2,7 @@
 module stc0_core_cocotb (
     input   wire        Clk,
     input   wire        ARst, 
+    input   wire        ARstb,
     // FT245 SFF Interface
     input   wire        RXFn,
     input   wire        TXEn,
@@ -68,7 +69,7 @@ module stc0_core_cocotb (
     );
     stc0_core stco0_core_(
         .ClkIngress(Clk),
-        .ARst(ARst),
+        .ARstb(ARstb),
         .ID(ED),
         .IValid(EValid),
         .ED(ID),
