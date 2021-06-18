@@ -27,5 +27,8 @@ set ::env(PL_TARGET_DENSITY) 0.4
 set ::env(CELL_PAD) 2
 set ::env(GLB_RT_ADJUSTMENT) 0.2
 
+set ::env(GLB_RT_MAX_DIODE_INS_ITERS) 4
+set ::env(DIODE_INSERTION_STRATEGY) 3
+
 # If you're going to use multiple power domains, then keep this disabled.
 set ::env(RUN_CVC) 1
