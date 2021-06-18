@@ -23,6 +23,7 @@ module oneWordFifo #(
 
     always @(posedge Clk or posedge ARst) begin
         if (ARst == 1'b1) begin
+            ReadData <= 32'hDEADC0DE;
             dataValid <= 0;
         end else begin
             if (Wr || (dataValid && ~Rd)) begin

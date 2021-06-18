@@ -26,6 +26,7 @@ module byteEgress (
             byteNum <= 0;
             DataValid <= 0;
             Ready <= 1'b1;
+            Data <= 8'hAB;
         end else begin
 
             if (Ready && WriteDataValid) begin
