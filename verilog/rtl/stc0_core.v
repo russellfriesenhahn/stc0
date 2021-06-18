@@ -5,7 +5,7 @@
 
 `default_nettype none
 module stc0_core#(
-    parameter DATA_WIDTH=17,
+    parameter DATA_WIDTH=16,
     parameter NUM_POINTS=1024,
     parameter NUM_POINTS_LOG2 = 10,
     parameter TW_WIDTH = 16
