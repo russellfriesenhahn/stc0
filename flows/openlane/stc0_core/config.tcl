@@ -20,6 +20,7 @@ set ::env(GND_NETS) [list {vssd1} {vssd2} {vssa1} {vssa2}]
 
 set ::env(FP_PIN_ORDER_CFG) $script_dir/pin_order.cfg
 
+set ::env(GLB_RT_MAXLAYER) 5
 set ::env(SYNTH_STRATEGY) "DELAY 0"
 set ::env(FP_CORE_UTIL) 30
 set ::env(PL_BASIC_PLACEMENT) 0
