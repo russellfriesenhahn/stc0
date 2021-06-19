@@ -13,6 +13,8 @@ set ::env(CLOCK_PERIOD) "10"
 #set ::env(DIE_AREA) "0 0 900 600"
 set ::env(DESIGN_IS_CORE) 0
 
+set ::env(STD_CELL_LIBRARY) "sky130_fd_sc_ls"
+
 set ::env(VDD_NETS) [list {vccd1} {vccd2} {vdda1} {vdda2}]
 set ::env(GND_NETS) [list {vssd1} {vssd2} {vssa1} {vssa2}]
 #set ::env(VDD_NETS) [list {vccd1} {vccd2}]
