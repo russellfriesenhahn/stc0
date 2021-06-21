@@ -20,7 +20,7 @@
 // LFSR polynomial coeffiecients: x^32 + x^22 + x^2 + x^1 + 1
 // LFSR width: 32 bits
 
-module lfsr32 (
+module lfsr32stc0 (
 	input wire  Clk,
 	input wire  ARst,
 	input wire  Enable,

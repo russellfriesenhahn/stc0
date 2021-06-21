@@ -25,7 +25,8 @@ module stc0_core#(
     input wire  [7:0]   ID,
     input wire          IValid,
     output wire [7:0]   ED,
-    output wire         EValid
+    output wire         EValid,
+    output wire [19:0] io_oeb
     //output wire         EClk
 );
 
@@ -48,8 +49,7 @@ module stc0_core#(
     wire byteEgressReady;
     wire ARst;
 
-    assign EClk = ClkIngress;
-
+    assign io_oeb = 20'b11111111111000000000;
 
     rstSync #(.NUM_SYNC_CLKS(5)) rstSync_clk (.Clk(ClkIngress),.ARstb(ARstb),.Rst(ARst));
 
@@ -82,7 +82,7 @@ module stc0_core#(
 
     wire                        SPRcsn_bf0;
     wire                        SPRwen_bf0;
-    wire [NUM_POINTS_LOG2-1:0]  SPRaddr_bf0;
+    wire [6:0]  SPRaddr_bf0;
     wire [(TW_WIDTH*2)-1:0]     SPRdin_bf0;
     wire [(TW_WIDTH*2)-1:0]     SPRdout_bf0;
 

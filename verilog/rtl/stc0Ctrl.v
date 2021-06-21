@@ -176,7 +176,7 @@ module stc0Ctrl#(
     // Need a way to limit the LFSR rounds to repeatable
     // Set the number of ticks or the number of times the seed value is hit
     //-----------------------------------------------------
-    lfsr32 lfsr32_x (
+    lfsr32stc0 lfsr32_x (
         .Clk(Clk),
         .ARst(ARst),
         .Enable(updateLFSRs),
@@ -184,7 +184,7 @@ module stc0Ctrl#(
         .Seed(lfsrX_Seed),
         .LFSR(LfsrX)
     );
-    lfsr32 lfsr32_y (
+    lfsr32stc0 lfsr32_y (
         .Clk(Clk),
         .ARst(ARst),
         .Enable(updateLFSRs),
