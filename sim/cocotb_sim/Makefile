@@ -54,7 +54,7 @@ HKD=$(WPWD)/../../modules/housekeeper/verilog/rtl
 PYTHONPATH := $(HKD)/../../sw/:$(WPWD)/../../sw:$(PYTHONPATH)
 
 DUT_VERILOG_SOURCES = $(DUTD)/stc0_addrMap.vh $(DUTD)/rstSync.v $(DUTD)/byteIngressCmdProcessor.v
-DUT_VERILOG_SOURCES += $(DUTD)/byteEgress.v $(DUTD)/stc0Ctrl.v $(DUTD)/lfsr32.v
+DUT_VERILOG_SOURCES += $(DUTD)/byteEgress.v $(DUTD)/stc0Ctrl.v $(DUTD)/lfsr32stc0.v
 DUT_VERILOG_SOURCES += $(DUTD)/spram.v $(DUTD)/multiplier.v $(DUTD)/stc0butterfly.v
 DUT_VERILOG_SOURCES += $(DUTD)/crc32.v $(DUTD)/crc32reg.v $(DUTD)/oneWordFifo.v $(DUTD)/egressStage.v
 DUT_VERILOG_SOURCES += $(DUTD)/stc0_core.v

@@ -23,7 +23,7 @@ module stc0_core_cocotb (
     wire        IValid;
     wire [7:0]  ID;
     wire [7:0]  ED;
-    wire        EClk;
+    wire [19:0] io_oeb;
 
     housekeeper_top housekeeper_top_0 (
         .Clk(Clk),
@@ -74,6 +74,6 @@ module stc0_core_cocotb (
         .IValid(EValid),
         .ED(ID),
         .EValid(IValid),
-        .EClk(EClk)
+        .io_oeb(io_oeb)
     );
 endmodule
